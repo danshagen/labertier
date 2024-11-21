@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Labertier</title>
+  </head>
+
+  <body>
+    <h1>Labertier</h1>
+    <button id="start">start</button>
+  </body>
+
+<script>
+const startBtn = document.getElementById("start");
+const audioContext = new AudioContext();
+
+const startAudio = async (context) => {
+  // input node: microphone
+  let mediaStream = await navigator.mediaDevices.getUserMedia({audio: true});
+  let micNode = context.createMediaStreamSource(mediaStream);
+  // processing node: audio worklet from labertier.js
+  await context.audioWorklet.addModule('labertier.js');
+  const labertier = new AudioWorkletNode(context, 'labertier');
+  // TODO: parameters
+  // const maxLengthSeconds = labertier.parameters.get('maxLengthSeconds');
+  // const levelThreshold = labertier.parameters.get('levelThreshold');
+  // const silenceTimeout = labertier.parameters.get('silenceTimeout');
+
+  // microphone -> labertier -> loudspeaker
+  micNode.connect(labertier).connect(context.destination);
+};
+
+startBtn.onclick = () => {
+  startAudio(audioContext);
+}
+</script>
+</html>
