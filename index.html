@@ -31,7 +31,12 @@ const silenceTimeoutSecondsSlider = document.getElementById("silenceTimeoutSecon
 const audioContext = new AudioContext();;
 const startAudio = async (context) => {
   // input node: microphone
-  let mediaStream = await navigator.mediaDevices.getUserMedia({audio: true});
+  let mediaStream = await navigator.mediaDevices.getUserMedia({
+    audio: {
+      echoCancellation: false,
+      noiseSuppression: false,
+      autoGainControl: true,
+    }});
   let micNode = context.createMediaStreamSource(mediaStream);
   // processing node: audio worklet from labertier.js
   await context.audioWorklet.addModule('labertier.js');
