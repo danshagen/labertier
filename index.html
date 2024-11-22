@@ -35,7 +35,7 @@ const startAudio = async (context) => {
     audio: {
       echoCancellation: false,
       noiseSuppression: false,
-      autoGainControl: true,
+      autoGainControl: false,
     }});
   let micNode = context.createMediaStreamSource(mediaStream);
   // processing node: audio worklet from labertier.js
