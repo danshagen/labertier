@@ -15,13 +15,13 @@ class Labertier extends AudioWorkletProcessor {
       },
       {
         name: "levelThreshold",
-        defaultValue: 0.2,
+        defaultValue: 0.1,
         minValue: 0.0,
         maxValue: 1.0
       },
       {
         name: "silenceTimeoutSeconds",
-        defaultValue: 1.0,
+        defaultValue: 2.0,
         minValue: 0.0,
         maxValue: 5.0
       }
@@ -65,12 +65,28 @@ class Labertier extends AudioWorkletProcessor {
           this.buffer.push(inputChannel[i]);
           outputChannel[i] = 0.0;
           this.timer++;
+
+          if (Math.abs(inputChannel[i]) > parameters.levelThreshold[i]) {
+            this.timer = 0;
+          }
+
           // check for timeout or buffer full
           if (this.timer >= this.timerTimeout || this.buffer.length >= (parameters.maxLengthSeconds[i] * sampleRate)) {
             this.state = "playing";
             console.log(this.state);
             this.port.postMessage("playing");
             this.index = 0;
+
+            // pitch the buffer
+            // let new_buffer = [];
+            // for (let j = 0; j < this.buffer.length; ++j) {
+            //   let k = j % 3;
+            //   if (k == 0 || k == 1)
+            //     new_buffer.push(this.buffer[j]);
+            //   else
+            //     new_buffer[-1] = (new_buffer[-1] + this.buffer[j]) / 2;
+            // }
+            // this.buffer = new_buffer;
           }
         }
         else if (this.state == "playing") {

@@ -28,8 +28,7 @@ const maxLengthSecondsSlider = document.getElementById("maxLengthSecondsSlider")
 const levelThresholdSlider = document.getElementById("levelThresholdSlider");
 const silenceTimeoutSecondsSlider = document.getElementById("silenceTimeoutSecondsSlider");
 
-const audioContext = new AudioContext();
-
+const audioContext = new AudioContext();;
 const startAudio = async (context) => {
   // input node: microphone
   let mediaStream = await navigator.mediaDevices.getUserMedia({audio: true});
@@ -44,7 +43,7 @@ const startAudio = async (context) => {
   maxLengthSecondsSlider.value = maxLengthSeconds.defaultValue;
   maxLengthSecondsSlider.onchange = updateMaxLengthSeconds;
   function updateMaxLengthSeconds() {
-    maxLengthSeconds.setValueAtTime(maxLengthSecondsSlider.value, audioContext.currentTime);
+    maxLengthSeconds.setValueAtTime(maxLengthSecondsSlider.value, context.currentTime);
     maxLengthSecondsLabel.textContent = maxLengthSecondsSlider.value + " s";
   }
   updateMaxLengthSeconds();
@@ -54,7 +53,7 @@ const startAudio = async (context) => {
   levelThresholdSlider.value = levelThreshold.defaultValue;
   levelThresholdSlider.onchange = updateLevelThreshold;
   function updateLevelThreshold() {
-    levelThreshold.setValueAtTime(levelThresholdSlider.value, audioContext.currentTime);
+    levelThreshold.setValueAtTime(levelThresholdSlider.value, context.currentTime);
     levelThresholdLabel.textContent = levelThresholdSlider.value;
   }
   updateLevelThreshold();
@@ -64,7 +63,7 @@ const startAudio = async (context) => {
   silenceTimeoutSecondsSlider.value = silenceTimeoutSeconds.defaultValue;
   silenceTimeoutSecondsSlider.onchange = updateSilenceTimeoutSeconds;
   function updateSilenceTimeoutSeconds() {
-    silenceTimeoutSeconds.setValueAtTime(silenceTimeoutSecondsSlider.value, audioContext.currentTime);
+    silenceTimeoutSeconds.setValueAtTime(silenceTimeoutSecondsSlider.value, context.currentTime);
     silenceTimeoutSecondsLabel.textContent = silenceTimeoutSecondsSlider.value + " s";
   }
   updateSilenceTimeoutSeconds();
