@@ -78,15 +78,15 @@ class Labertier extends AudioWorkletProcessor {
             this.index = 0;
 
             // pitch the buffer
-            // let new_buffer = [];
-            // for (let j = 0; j < this.buffer.length; ++j) {
-            //   let k = j % 3;
-            //   if (k == 0 || k == 1)
-            //     new_buffer.push(this.buffer[j]);
-            //   else
-            //     new_buffer[-1] = (new_buffer[-1] + this.buffer[j]) / 2;
-            // }
-            // this.buffer = new_buffer;
+            let new_buffer = [];
+            for (let j = 0; j < this.buffer.length; ++j) {
+              let k = j % 3;
+              if (k == 0 || k == 1)
+                new_buffer.push(this.buffer[j]);
+              else
+                new_buffer[-1] = (new_buffer[-1] + this.buffer[j]) / 2;
+            }
+            this.buffer = new_buffer;
           }
         }
         else if (this.state == "playing") {
