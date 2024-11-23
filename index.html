@@ -6,22 +6,23 @@
     <title>Labertier</title>
     <style>
       body {
+        font-family: sans-serif;
         display: flex;
         flex-direction: column;
-        margin: 0 auto 0 auto;
-        width: 10rem;
+        margin: 3rem auto 0 auto;
+        width: 20rem;
+      }
+      button, object {
+        margin-top: 1rem;
+      }
     </style>
     <link rel="icon" href="parrot.svg">
   </head>
 
   <body>
     <h1>Labertier</h1>
-    <img src="parrot.svg">
     <object id="parrot-object" type="image/svg+xml" data="parrot.svg"></object>
     <button id="start">start</button>
-    <div><input type="range" class="slider" id="maxLengthSecondsSlider" step="1"><label id="maxLengthSecondsLabel"></label></div>
-    <div><input type="range" class="slider" id="levelThresholdSlider" step="0.05"><label id="levelThresholdLabel"></label></div>
-    <div><input type="range" class="slider" id="silenceTimeoutSecondsSlider" step="0.1"><label id="silenceTimeoutSecondsLabel"></label></div>
   </body>
 
   <script src="./main.js" type="module"></script>

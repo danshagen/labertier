@@ -21,7 +21,7 @@ class Labertier extends AudioWorkletProcessor {
       },
       {
         name: "silenceTimeoutSeconds",
-        defaultValue: 2.0,
+        defaultValue: 0.5,
         minValue: 0.0,
         maxValue: 5.0
       }
