@@ -1,19 +1,25 @@
 const startBtn = document.getElementById("start");
 var parrotSvg = null;
 
+var mediaStream;
+var micNode;
+var plappertier;
+
 window.onload = () => {
   parrotSvg = document.getElementById("parrot-object").contentDocument.getElementById("parrot");
   parrotSvg.pauseAnimations();
   parrotSvg.setCurrentTime(0); 
 }
 
-const startAudio = async (context) => {
+async function startAudio() {
+  console.log("starting");
+  const audioContext = new AudioContext();
   // input node: microphone
-  let mediaStream = await navigator.mediaDevices.getUserMedia({audio: true});
-  let micNode = context.createMediaStreamSource(mediaStream);
+  mediaStream = await navigator.mediaDevices.getUserMedia({audio: true});
+  micNode = audioContext.createMediaStreamSource(mediaStream);
   // processing node: audio worklet from plappertier.js
-  await context.audioWorklet.addModule('plappertier.js');
-  const plappertier = new AudioWorkletNode(context, 'plappertier');
+  await audioContext.audioWorklet.addModule('plappertier.js');
+  plappertier = new AudioWorkletNode(audioContext, 'plappertier');
 
   plappertier.port.onmessage = (message) => {
     if (message.data == "playing") {
@@ -26,10 +32,23 @@ const startAudio = async (context) => {
   }
 
   // microphone -> plappertier -> loudspeaker
-  micNode.connect(plappertier).connect(context.destination);
+  micNode.connect(plappertier).connect(audioContext.destination);
+
+  // update button
+  startBtn.textContent = "stop";
+  startBtn.onclick = stopAudio;
 };
 
-startBtn.onclick = () => {
-  const audioContext = new AudioContext();
-  startAudio(audioContext);
+async function stopAudio() {
+  console.log("stopping");
+  // stop streams, disconnect Nodes
+  mediaStream.getTracks().forEach(track => track.stop());
+  micNode.disconnect();
+  plappertier.disconnect();
+
+  // update button
+  startBtn.textContent = "start";
+  startBtn.onclick = startAudio;
 }
+
+startBtn.onclick = startAudio;

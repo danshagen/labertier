@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Plappertier</title>
     <style>
       * {
@@ -13,7 +13,7 @@
         margin: 0;
         height: 100dvh;
 
-        font-family: sans-serif;
+        font-family: ui-sans-serif, sans-serif;
 
         display: flex;
         flex-direction: column;
@@ -35,6 +35,15 @@
         /* prevent growing too big */
         max-width: 100dvw;
         max-height: 100dvh;
+      }
+      button {
+        background-color: white;
+        border: 1px solid lightgray;
+        padding: .5rem 1.5rem .5rem 1.5rem;
+        border-radius: 0.5rem;
+      }
+      button:hover {
+        background-color: lightgray;
       }
     </style>
     <link rel="icon" href="parrot.svg">

@@ -9,13 +9,13 @@ class Plappertier extends AudioWorkletProcessor {
       },
       {
         name: "levelThreshold",
-        defaultValue: 0.1,
+        defaultValue: 0.05,
         minValue: 0.0,
         maxValue: 1.0
       },
       {
         name: "silenceTimeoutSeconds",
-        defaultValue: 0.5,
+        defaultValue: 0.2,
         minValue: 0.0,
         maxValue: 5.0
       }
