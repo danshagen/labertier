@@ -1,10 +1,4 @@
-/**
- * A simple bypass node demo.
- *
- * @class BypassProcessor
- * @extends AudioWorkletProcessor
- */
-class Labertier extends AudioWorkletProcessor {
+class Plappertier extends AudioWorkletProcessor {
   static get parameterDescriptors() {
     return [
      {
@@ -108,4 +102,4 @@ class Labertier extends AudioWorkletProcessor {
   }
 }
 
-registerProcessor('labertier', Labertier);
+registerProcessor('plappertier', Plappertier);

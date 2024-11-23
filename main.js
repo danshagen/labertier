@@ -11,12 +11,11 @@ const startAudio = async (context) => {
   // input node: microphone
   let mediaStream = await navigator.mediaDevices.getUserMedia({audio: true});
   let micNode = context.createMediaStreamSource(mediaStream);
-  // processing node: audio worklet from labertier.js
-  await context.audioWorklet.addModule('labertier.js');
-  const labertier = new AudioWorkletNode(context, 'labertier');
+  // processing node: audio worklet from plappertier.js
+  await context.audioWorklet.addModule('plappertier.js');
+  const plappertier = new AudioWorkletNode(context, 'plappertier');
 
-  labertier.port.onmessage = (message) => {
-    startBtn.textContent = message.data;
+  plappertier.port.onmessage = (message) => {
     if (message.data == "playing") {
       parrotSvg.unpauseAnimations();
     }
@@ -26,8 +25,8 @@ const startAudio = async (context) => {
     }
   }
 
-  // microphone -> labertier -> loudspeaker
-  micNode.connect(labertier).connect(context.destination);
+  // microphone -> plappertier -> loudspeaker
+  micNode.connect(plappertier).connect(context.destination);
 };
 
 startBtn.onclick = () => {
